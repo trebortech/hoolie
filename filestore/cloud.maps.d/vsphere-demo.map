@@ -1,0 +1,9 @@
+vsphere-demo:
+  - demo1-box1:
+      minion:
+        grains:
+          roles: logserver
+  - demo1-box2:
+      minion:
+        grains:
+          roles: logwebserver

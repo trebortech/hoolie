@@ -1,0 +1,34 @@
+html {
+	overflow-x:hidden;
+}
+
+body {
+	overflow: visible;
+}
+
+.ddsmoothmenu ul li {
+	display: inline-block;
+	margin-bottom: -1px;
+}
+
+.intro {
+	margin-top: 0;
+}
+
+#contact-form input {
+	height: 15px;
+	padding: 10px 10px;
+}
+
+.comment-form input {
+	height: 16px;
+	padding: 8px 10px;
+}
+
+.carousel {
+	overflow: hidden;
+}
+
+#contact-form input#submit-button {
+	padding: 5px 3px;
+}

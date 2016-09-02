@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'AllerItalic';
+    src: url('aller/aller-italic-webfont.eot');
+    src: url('aller/aller-italic-webfont.eot?iefix') format('eot'),
+         url('aller/aller-italic-webfont.woff') format('woff'),
+         url('aller/aller-italic-webfont.ttf') format('truetype'),
+         url('aller/aller-italic-webfont.svg#webfontMPb2iyFP') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'AllerRegular';
+    src: url('aller/aller-webfont.eot');
+    src: url('aller/aller-webfont.eot?iefix') format('eot'),
+         url('aller/aller-webfont.woff') format('woff'),
+         url('aller/aller-webfont.ttf') format('truetype'),
+         url('aller/aller-webfont.svg#webfontfEdhzTd5') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'AllerRegular';
+}
+
+h1 {
+	font-size: 26px;
+}
+
+h2 {
+	font-size: 23px;
+}
+
+h3 {
+	font-size: 20px;
+	line-height: 26px;
+}
+
+h4 {
+	font-size: 17px;
+}
+
+h5 {
+	font-size: 15px;
+}
+
+h6 {
+	font-size: 14px;
+}
+
+a.button {
+	font-family: 'AllerRegular';
+}
+
+h2.trigger {
+	font-size: 18px;
+}
+
+.dropcap {
+	font-family: 'AllerRegular';
+	font-size:40px;
+}
+
+table th {
+	font-family: 'AllerRegular';
+}
+
+.ddsmoothmenu {
+	font-family: 'AllerRegular';
+	font-size: 16px;
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'AllerRegular';
+}
+
+.ddsmoothmenu ul li ul li a {
+	font-size: 12px;
+}
+
+/* Sub level menu links style */
+.ddsmoothmenu ul li ul li ul li a {
+	font-size: 12px;
+}
+
+.intro h1 {
+	font-family: 'AllerItalic';
+}
+
+ul.gallerynav li a {
+	font-family: 'AllerRegular';
+}
+
+ul#tab-menu {
+	font-family: 'AllerRegular';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'AllerRegular';
+}

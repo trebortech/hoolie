@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'DeliciousRoman';
+    src: url('delicious/delicious-roman-webfont.eot');
+    src: url('delicious/delicious-roman-webfont.eot?iefix') format('eot'),
+         url('delicious/delicious-roman-webfont.woff') format('woff'),
+         url('delicious/delicious-roman-webfont.ttf') format('truetype'),
+         url('delicious/delicious-roman-webfont.svg#webfontnJlxOCfe') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'DeliciousItalic';
+    src: url('delicious/delicious-italic-webfont.eot');
+    src: url('delicious/delicious-italic-webfont.eot?iefix') format('eot'),
+         url('delicious/delicious-italic-webfont.woff') format('woff'),
+         url('delicious/delicious-italic-webfont.ttf') format('truetype'),
+         url('delicious/delicious-italic-webfont.svg#webfontvAaju6CY') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'DeliciousRoman';
+}
+
+a.button {
+	font-family: 'DeliciousRoman';
+}
+
+.dropcap {
+	font-family: 'DeliciousRoman';
+}
+
+
+table th {
+	font-family: 'DeliciousRoman';
+}
+
+.ddsmoothmenu {
+	font-family: 'DeliciousRoman';
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'DeliciousRoman';
+}
+
+.intro h1 {
+	font-family: 'DeliciousItalic';
+}
+
+ul.gallerynav li a {
+	font-family: 'DeliciousRoman';
+}
+
+ul#tab-menu {
+	font-family: 'DeliciousRoman';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'DeliciousRoman';
+}

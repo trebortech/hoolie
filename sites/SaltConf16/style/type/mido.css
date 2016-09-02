@@ -1,0 +1,49 @@
+@font-face {
+	font-family: 'MidoMedium';
+	src: url('mido/Mido-webfont.eot');
+	src: local('☺'), url('mido/Mido-webfont.woff') format('woff'), url('mido/Mido-webfont.ttf') format('truetype'), url('mido/Mido-webfont.svg#webfonto3aStUbX') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'MidoMedium';
+}
+
+a.button {
+	font-family: 'MidoMedium';
+}
+
+.dropcap {
+	font-family: 'MidoMedium';
+}
+
+
+table th {
+	font-family: 'MidoMedium';
+}
+
+.ddsmoothmenu {
+	font-family: 'MidoMedium';
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'MidoMedium';
+}
+
+.intro h1 {
+	font-family: 'MidoMedium';
+}
+
+ul.gallerynav li a {
+	font-family: 'MidoMedium';
+}
+
+ul#tab-menu {
+	font-family: 'MidoMedium';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'MidoMedium';
+}

@@ -1,0 +1,13 @@
+{% set gif = salt['pillar.get']('local_gif', 'http://i.giphy.com/YYO87CDrKfLz2.gif') %}
+{% set keyword = salt['pillar.get']('local_keyword', 'Waving Minion') %}
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+<link rel="stylesheet" media="all" href="style/type/puritan.css" />
+</head>
+<div id="wrapper">
+<img id="local" src="{{ gif }}" width="960" height="380"/>
+<h4>Local Device</h4>
+<p>Keyword: {{ keyword }}</p>
+</div>

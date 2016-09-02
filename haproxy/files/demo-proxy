@@ -1,0 +1,27 @@
+global
+    log 127.0.0.1 local0 notice
+    stats socket /etc/haproxy/haproxysock level admin
+    maxconn 200
+    user haproxy
+    group haproxy
+
+
+defaults
+    log      global
+    mode     http
+    option   httplog
+    option   dontlognull
+    retries  3
+    option   redispatch
+    timeout connect   5000
+    timeout client    10000
+    timeout server    10000
+
+
+frontend demo-http
+    bind *:80
+    default_backend zenoss-rm-servers
+
+backend demo-servers
+    server demo1 demo1:80 maxconn 32
+

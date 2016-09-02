@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'ComfortaaRegular';
+    src: url('comfortaa/Comfortaa_Regular-webfont.eot?') format('eot'),
+         url('comfortaa/Comfortaa_Regular-webfont.woff') format('woff'),
+         url('comfortaa/Comfortaa_Regular-webfont.ttf') format('truetype'),
+         url('comfortaa/Comfortaa_Regular-webfont.svg#webfontOXySAFbV') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'ComfortaaRegular';
+}
+
+a.button {
+	font-family: 'ComfortaaRegular';
+}
+
+.dropcap {
+	font-family: 'ComfortaaRegular';
+}
+
+
+table th {
+	font-family: 'ComfortaaRegular';
+}
+
+.ddsmoothmenu {
+	font-family: 'ComfortaaRegular';
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'ComfortaaRegular';
+}
+
+.intro h1 {
+	font-family: 'ComfortaaRegular';
+}
+
+ul.gallerynav li a {
+	font-family: 'ComfortaaRegular';
+}
+
+ul#tab-menu {
+	font-family: 'ComfortaaRegular';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'ComfortaaRegular';
+}

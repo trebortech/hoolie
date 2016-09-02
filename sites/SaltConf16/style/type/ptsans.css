@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'PTSansItalic';
+    src: url('ptsans/ptsans-italic-webfont.eot');
+    src: url('ptsans/ptsans-italic-webfont.eot?iefix') format('eot'),
+         url('ptsans/ptsans-italic-webfont.woff') format('woff'),
+         url('ptsans/ptsans-italic-webfont.ttf') format('truetype'),
+         url('ptsans/ptsans-italic-webfont.svg#webfontlR11fKsb') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansRegular';
+    src: url('ptsans/ptsans-regular-webfont.eot');
+    src: url('ptsans/ptsans-regular-webfont.eot?iefix') format('eot'),
+         url('ptsans/ptsans-regular-webfont.woff') format('woff'),
+         url('ptsans/ptsans-regular-webfont.ttf') format('truetype'),
+         url('ptsans/ptsans-regular-webfont.svg#webfontdeSwgHNj') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'PTSansRegular';
+	font-weight: normal;
+}
+
+a.button {
+	font-family: 'PTSansRegular';
+}
+
+.dropcap {
+	font-family: 'PTSansRegular';
+}
+
+
+table th {
+	font-family: 'PTSansRegular';
+}
+
+.ddsmoothmenu {
+	font-family: 'PTSansRegular';
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'PTSansRegular';
+}
+
+.intro h1 {
+	font-family: 'PTSansItalic';
+}
+
+ul.gallerynav li a {
+	font-family: 'PTSansRegular';
+}
+
+ul#tab-menu {
+	font-family: 'PTSansRegular';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'PTSansRegular';
+}

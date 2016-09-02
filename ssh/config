@@ -1,0 +1,6 @@
+Host github.com
+    Hostname github.com
+    StrictHostKeyChecking no
+    User git
+    IdentityFile /root/.ssh/{{ SSHKEY }}.priv
+    IdentitiesOnly yes

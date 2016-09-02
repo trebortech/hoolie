@@ -1,0 +1,14 @@
+# Install Notes for windows packages
+
+http://docs.saltstack.com/en/latest/topics/windows/windows-package-manager.html
+
+
+salt-run winrepo.genrepo
+salt '*' pkg.refresh_db  <--- should only target windows boxes
+
+
+example to install package
+
+salt '*' pkg.available_version 7zip
+
+salt '*' pkg.install '7zip' version='9.20.00.0'

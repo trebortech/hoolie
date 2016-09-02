@@ -1,0 +1,5 @@
+network.host: {{ HOSTIP }}
+http.port: {{ PORT }}
+
+cluster.name: {{ CLUSTERNAME }}
+node.name: {{ MINIONID }}

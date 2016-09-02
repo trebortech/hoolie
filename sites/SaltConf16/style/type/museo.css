@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'MuseoSlab500';
+    src: url('museo/museoslab-500-webfont.eot');
+    src: url('museo/museoslab-500-webfont.eot?iefix') format('eot'),
+         url('museo/museoslab-500-webfont.woff') format('woff'),
+         url('museo/museoslab-500-webfont.ttf') format('truetype'),
+         url('museo/museoslab-500-webfont.svg#webfontcTV1SDnq') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'MuseoSlab500Italic';
+    src: url('museo/museoslab-500italic-webfont.eot');
+    src: url('museo/museoslab-500italic-webfont.eot?iefix') format('eot'),
+         url('museo/museoslab-500italic-webfont.woff') format('woff'),
+         url('museo/museoslab-500italic-webfont.ttf') format('truetype'),
+         url('museo/museoslab-500italic-webfont.svg#webfontfaYazmTK') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'MuseoSlab500';
+}
+
+h1 {
+	font-size: 26px;
+}
+
+h2 {
+	font-size: 23px;
+}
+
+h3 {
+	font-size: 20px;
+	line-height: 26px;
+}
+
+h4 {
+	font-size: 17px;
+}
+
+h5 {
+	font-size: 15px;
+}
+
+h6 {
+	font-size: 14px;
+}
+
+a.button {
+	font-family: 'MuseoSlab500';
+}
+
+h2.trigger {
+	font-size: 18px;
+}
+
+.dropcap {
+	font-family: 'MuseoSlab500';
+	font-size:40px;
+}
+
+table th {
+	font-family: 'MuseoSlab500';
+}
+
+.ddsmoothmenu {
+	font-family: 'MuseoSlab500';
+}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul {
+	font-family: 'MuseoSlab500';
+}
+
+.ddsmoothmenu ul li ul li a {
+	font-size: 12px;
+}
+
+/* Sub level menu links style */
+.ddsmoothmenu ul li ul li ul li a {
+	font-size: 12px;
+}
+
+.intro h1 {
+	font-family: 'MuseoSlab500Italic';
+	line-height: 27px;
+	font-size: 21px;
+}
+
+ul.gallerynav li a {
+	font-family: 'MuseoSlab500';
+}
+
+ul#tab-menu {
+	font-family: 'MuseoSlab500';
+}
+
+#wrapper ul.tabs li {
+	font-family: 'MuseoSlab500';
+}

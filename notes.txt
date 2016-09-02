@@ -1,0 +1,150 @@
+
+########### REACTOR FILES  ##########
+/srv/reactor/manage/deploy.sls
+
+'Update web files':
+  local.state.sls:
+    - tgt: 'roles:coolsite'
+    - expr_form: grain
+    - arg:
+      - sites.coolsite-update
+    - kwarg:
+        saltenv: salthome
+
+
+/srv/reactor/manage/hareset.sls
+
+'Reset HAProxy configuration':
+  local.state.highstate:
+    - tgt: 'roles:coolsite-ha'
+    - expr_form: grain
+
+
+/srv/reactor/manage/reboot.sls
+
+{% set minionid = data['name'] %}
+
+'Reboot docker cloud instance':
+  local.state.highstate:
+    - tgt: {{ minionid }}
+
+########### PILLAR  ############
+
+/srv/pillar/creds/docker.sls
+
+demo-docker-registries:
+    https://index.docker.io/v1/:
+      email: rbooth@saltstack.com
+      password: putyourpasswordhere
+      username: putyourusernamehere
+
+/srv/pillar/creds/notification.sls
+
+slack:
+  api_key: putyourapikeyhere
+  channel: 'homelab'
+  from_name: HomeSalt
+
+hipchat:
+  room_id: homelab
+  api_key: putyourapikeyhere
+  api_version: v1
+  from_name: HomeSalt
+
+
+/srv/pillar/manage/mine.sls
+
+mine_interval: 30
+
+
+#############  TOP FILE ##########
+
+/srv/salt/top.sls
+
+salthome:
+
+  'G@roles:coolsite':
+    - pip.install
+    - sites.coolsite
+    - docker
+    - nginx.docker-nojinja
+    - slack.test
+
+  'G@roles:coolsite-ha':
+    - haproxy.config
+
+
+######### MASTER CONFIG  ##########
+
+/etc/salt/master.d/api.conf
+
+rest_cherrypy:
+  port: 8001
+  ssl_crt: /etc/pki/tls/certs/localhost.crt
+  ssl_key: /etc/pki/tls/certs/localhost.key
+  webhook_url: /hook
+  webhook_disable_auth: True
+
+
+/etc/salt/master.d/auth.conf
+
+external_auth:
+  pam:
+    rbooth:
+      - .*
+
+
+/etc/salt/master.d/reactor.conf
+
+reactor:
+  - 'salt/cloud/docker*/deploy_script': 
+    - /srv/reactor/manage/reboot.sls
+  - 'salt/netapi/hook/acme/commit':
+    - /srv/reactor/manage/deploy.sls
+  - 'se-team/docker/haproxy/reset':
+    - /srv/reactor/manage/hareset.sls
+
+########### CLOUD MAP  ###############
+
+aws-node:
+  - dockerhost1:
+      grains:
+        roles:
+          - coolsite
+  - dockerhost2:
+      grains:
+        roles:
+          - coolsite
+do-node:
+  - dockerhost3:
+      grains:
+        roles:
+          - coolsite
+
+
+########### CLOUD PROFILE ############
+
+aws-node:
+  script_args: -P -p build-essential -p python-dev git v2015.8.1
+
+  provider: tt-aws
+  image: ami-9a562df2
+  size: t2.micro
+  minion:
+    master: iwebinar.salt.trebortech.ninja
+    startup_states: highstate
+    mine_interval: 5
+  tag:
+      'Environment': 'Production'
+      'Customer': 'Rob'
+      'Department': 'Marketing'
+
+  ssh_username: ubuntu
+  ssh_interface: private_ips
+  network_interfaces:
+    - DeviceIndex: 0
+      SubnetId: subnet-0cae2855
+      SecurityGroupId:
+        - sg-37fc6453
+      allocate_new_eip: False
+

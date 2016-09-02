@@ -1,0 +1,15 @@
+server.port: 5601
+server.host: "0.0.0.0"
+
+elasticsearch.url: "http://10.5.1.139:9201"
+
+kibana.index: ".kibana"
+
+elasticsearch.username: "kibana4-server"
+elasticsearch.password: "saltme"
+
+server.ssl.key: /x/localhost.key
+server.ssl.cert: /x/localhost.crt
+
+shield.encryptionKey: "Thisismysecret"
+shield.sessionTimeout: 600000

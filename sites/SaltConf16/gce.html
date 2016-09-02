@@ -1,0 +1,14 @@
+{% set gif = salt['pillar.get']('gce_gif', 'http://i.giphy.com/A3RyFua6XWG76.gif') %}
+{% set keyword = salt['pillar.get']('gce_keyword', 'Smiling Minion') %}
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+<link rel="stylesheet" media="all" href="style/type/puritan.css" />
+</head>
+<div id="wrapper">
+<img id="gce" src="{{ gif }}" width="225" height="125"/>
+<br><br>
+<h4>Google Compute Engine</h4>
+<p>Keyword: {{ keyword }}</p>
+</div>
