@@ -1,0 +1,34 @@
+
+{% if data['fun'] == 'runner.cloud.profile' %}
+
+{% if data['return'] is defined %}
+
+{% set mymessage = '' %}
+
+{% for minionname, value in data['return'].iteritems() %}
+{% set minionip = data['return'][minionname]['privateIpAddress'] %}
+{% set mymessage = mymessage + 'Cloud instance ' + minionname + ' has been deployed with the following IP address: ' + minionip %}
+
+{% endfor %}
+'Notify cloud done':
+  local.state.sls:
+    - tgt: 'saltmaster'
+    - arg:
+      - slack.blast
+    - kwarg:
+        pillar:
+          mymessage: "{{ mymessage }}"
+
+
+'Send to Zenny':
+  local.state.sls:
+    - tgt: 'zenny'
+    - arg:
+      - zenny.message
+    - kwarg:
+        pillar:
+          color: "blue"
+          message: "{{ mymessage }}"
+
+{% endif %}
+{% endif %}
