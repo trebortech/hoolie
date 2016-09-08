@@ -27,7 +27,7 @@ def exists(name, bucket, files, path):
            'result': True,
            'comment': ''}
 
-    changes = {}
+    changes = []
 
     __salt__['file.mkdir'](dir_path=path)
 
