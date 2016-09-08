@@ -60,5 +60,5 @@ def exists(name, bucket, files, path):
         ret['result'] = False
         ret['comment'] = 'Files must be string or list'
 
-    ret['changes'] = {'No Change': '\n '.join(nochange), 'Downloaded': '\n '.join(changes)}
+    ret['changes'] = {'No Change': '\n'.join(nochange), 'Downloaded': '\n'.join(changes)}
     return ret
