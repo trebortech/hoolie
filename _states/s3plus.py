@@ -60,5 +60,8 @@ def exists(name, bucket, files, path):
         ret['result'] = False
         ret['comment'] = 'Files must be string or list'
 
-    ret['changes'] = {'No Change': '\n'.join(nochange), 'Downloaded': '\n'.join(changes)}
+    if len(changes) > 0:
+        ret['changes'] = {'No Change': '\n'.join(nochange), 'Downloaded': '\n'.join(changes)}
+    else:
+        ret['comment'] = 'No files were updated'
     return ret
