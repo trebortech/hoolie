@@ -59,4 +59,5 @@ def exists(name, bucket, files, path):
         ret['result'] = False
         ret['comment'] = 'Files must be string or list'
 
+    ret['changes'] = changes
     return ret
