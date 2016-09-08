@@ -27,6 +27,7 @@ def exists(name, bucket, files, path):
            'result': True,
            'comment': ''}
 
+    nochange = []
     changes = []
 
     __salt__['file.mkdir'](dir_path=path)
@@ -35,29 +36,29 @@ def exists(name, bucket, files, path):
         for file in files:
             filepath = '{0}/{1}'.format(path, file)
             if __salt__['file.file_exists'](filepath):
-                changes.append('{0} already exists.'.format(file))
+                nochange.append(file)
             else:
                 __salt__['s3plus.get_file'](
                     objectid=file,
                     bucketname=bucket,
                     path='{0}/{1}'.format(path, file))
-                changes.append('{0} was downloaded'.format(file))
+                changes.append(file)
 
     elif type(files) is str:
         #check if file exists
         filepath = '{0}/{1}'.format(path, files)
         if __salt__['file.file_exists'](filepath):
-            changes.append('{0} already exists.'.format(files))
+            nochange.append(files)
         else:
             __salt__['s3plus.get_file'](
                 objectid=file,
                 bucketname=bucket,
                 path='{0}/{1}'.format(path, file))
-            changes.append('{0} was downloaded'.format(files))
+            changes.append(files)
 
     else:
         ret['result'] = False
         ret['comment'] = 'Files must be string or list'
 
-    ret['changes'] = changes
+    ret['changes'] = {'No Change': ', '.join(nochange), 'Downloaded': ', '.join(changes)}
     return ret
