@@ -37,3 +37,7 @@ include:
       - SSMS-Setup-ENU.exe
       - SSMS-Setup-ENU.exe.md5
       - Salt-Minion-2016.3.2-AMD64-Setup.exe
+      - zabbix_agents_2.2.9.win.zip
+      - zabbix_agents_2.2.9.win.zip.md5
+      - zabbix_agents_2.4.4.win.zip
+      - zabbix_agents_2.4.4.win.zip.md5
