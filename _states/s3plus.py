@@ -46,7 +46,7 @@ def exists(name, bucket, files, path):
     elif type(files) is str:
         #check if file exists
         filepath = '{0}/{1}'.format(path, files)
-        if __salt__['file.file_exists'](filepath)
+        if __salt__['file.file_exists'](filepath):
             changes.append('{0} already exists.'.format(files))
         else:
             __salt__['s3plus.get_file'](
