@@ -8,6 +8,8 @@ An engine that check AWS running instances and shuts down what is not needed
     Example configuration (master / minion config)
         engines:
             - watch_aws:
+                keyid: xxxxxxxxxxx
+                key: xxxxxxxxxxxxxxxxxxxxxx
                 interval: 10
                 runconfig:
                     - sse-demo: mo-fr  # mon-fri 24 hours
@@ -46,7 +48,9 @@ def __virtual__():
 
 
 def start(interval=10,
-          runconfig='',
+          runconfig=None,
+          keyid=None,
+          key=None,
           tag='salt/engines/watch_aws'):
 
     daysofweek = {
@@ -72,14 +76,6 @@ def start(interval=10,
         else:
             __salt__['event.send'](tag, msg)
 
-    if not all(account_sid, auth_token, twilio_number):
-        log.debug('WATCH_AWS configuration not found')
-        return
-
-    config = __pillar__.get('aws', None)
-    key = config.get('key')
-    keyid = config.get('keyid')
-
     ec2conn = ec2(keyid, key)
 
     filters = {}
@@ -94,7 +90,7 @@ def start(interval=10,
         try:
             environment = reservation.instances[0].tags['Environment'].lower()
 
-            if environment not 'production':
+            if environment != 'production':
                 runtime = runconfig[environment].split('/')
 
                 if len(runtime) == 1:
@@ -107,7 +103,7 @@ def start(interval=10,
                 hour = today.hour
 
                 # Check if running during off hours
-                if runninghours not 24:
+                if runninghours != 24:
                     start, finish = runninghours.split('-')
                     if hour < int(start) or hour >= int(finish):
                         instanceList.append(reservation.instances[0].id)
@@ -117,7 +113,9 @@ def start(interval=10,
                 if daysofweek[weekday] not in runtime[0]:
                     instanceList.append(reservation.instances[0].id)
                     instanceName.append(reservation.instances[0].tags['Name'])
-                    
+        except:
+            pass
+
     if len(instanceList) > 0:
         ec2conn.stop_instances(instanceList)
         msg = 'Engine is shutting down the following AWS instances {0}'.format(','.join(instanceName))
