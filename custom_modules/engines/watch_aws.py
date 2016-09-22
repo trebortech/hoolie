@@ -7,17 +7,15 @@ An engine that check AWS running instances and shuts down what is not needed
 
     Example configuration (master / minion config)
         engines:
-            - watch_aws:
-                keyid: xxxxxxxxxxx
-                key: xxxxxxxxxxxxxxxxxxxxxx
+            - resource_manager:
+                keygrain: minionenv
                 interval: 10
                 runconfig:
-                    - sse-demo: mo-fr  # mon-fri 24 hours
-                    - orch-demo: mo-fr/8-17 # mon-fri 8am to 5pm
-                    - default: mo-fr/8-17
+                    - sse-demo: mo,tu,we,th,fr  # mon-fri 24 hours
+                    - orch-demo: mo,fr/8-17 # mon and fri 8am to 5pm
+                    - default: mo,tu,we,th,fr/8-17
 
 
-:depends: boto
 '''
 
 # Import Python libs
@@ -26,13 +24,6 @@ import logging
 import datetime
 import time
 
-# Import 3rd Party libs
-try:
-    from boto.ec2.connection import EC2Connection as ec2
-    HAS_BOTO = True
-except ImportError:
-    HAS_BOTO = False
-
 # Import salt libs
 import salt.utils
 import salt.utils.event
@@ -40,28 +31,55 @@ import salt.utils.event
 log = logging.getLogger(__name__)
 
 
-def __virtual__():
-    if HAS_BOTO:
-        return True
-    else:
-        return False
+
+def _get_minions(tgt):
+
+    minions = []
+
+    tgt = tgt
+    expr_form = 'grain'
+
+    pillar_util = salt.utils.master.MasterPillarUtil(
+        tgt,
+        expr_form,
+        use_cached_grains=True,
+        grains_fallback=False,
+        opts=__opts__)
+
+    cached_grains = pillar_util.get_minion_grains()
+
+    for item in cached_grains.viewitems():
+        if len(item[1]) > 0:
+            minions.append(item[0])
+
+    return minions
+
+
+def _check_if_running(minions):
+    cleanlist = []
+
+    ret = salt.runners.manage.up(tgt=minions, expr_form='list')
+
+    log.debug('****** RETURN DATA {0}'.format(ret))
+    #for minion in minions:
+    #    if __salt__['test.ping'](minion):
+    #        cleanlist.append(minion)
+    #return cleanlist
+    return
+
+def _stop_minions(minions):
+    __salt__['system.shutdown'](minions)
+
+
+def _start_minions(minions):
+
 
 
 def start(interval=10,
           runconfig=None,
-          keyid=None,
-          key=None,
-          tag='salt/engines/watch_aws'):
+          keygrain=None
+          tag='salt/engines/cloud_jobs'):
 
-    daysofweek = {
-        0: 'mo',
-        1: 'tu',
-        2: 'we',
-        3: 'th',
-        4: 'fr',
-        5: 'sa',
-        6: 'su'
-    }
 
     if __opts__.get('__role') == 'master':
         fire_master = salt.utils.event.get_master_event(
@@ -76,45 +94,35 @@ def start(interval=10,
         else:
             __salt__['event.send'](tag, msg)
 
-    ec2conn = ec2(keyid, key)
+    today = datetime.datetime.today()
+    weekday = today.weekday()
+    hour = today.hour
 
-    filters = {}
-    filters['instance-state-name'] = 'running'
+    for grain in runconfig:
+        runtime = runconfig[grain].split('/')
+        
+        if len(runtime) == 1:
+            runninghours = 24
+        else:
+            runninghours = runtime[1]
 
-    runningInstances = ec2conn.get_all_instances(filters=filters)
+        if runninghours != 24:
+            start, finish = runninghours.split('-')
+            if hour < int(start) or hour >= int(finish):
+                instanceList = _get_minions(grain)
+            elif daysofweek[weekday] not in runtime[0]:
+                instanceList = _get_minions(grain)
+        else:
+            if daysofweek[weekday] not in runtime[0]:
+                instanceList = _get_minions(grain)
 
-    instanceList = []
-    instanceName = []
+        # instanceList now has a list of minions that should be shutdown
+        # check to see if they are running
+        cleanlist = _check_if_running(instanceList)
 
-    for reservation in runningInstances:
-        try:
-            environment = reservation.instances[0].tags['Environment'].lower()
+        if len(cleanlist) > 0:
+            _stop_minions(cleanlist)
 
-            if environment != 'production':
-                runtime = runconfig[environment].split('/')
-
-                if len(runtime) == 1:
-                    runninghours = 24
-                else:
-                    runninghours = runtime[1]
-
-                today = datetime.datetime.today()
-                weekday = today.weekday()
-                hour = today.hour
-
-                # Check if running during off hours
-                if runninghours != 24:
-                    start, finish = runninghours.split('-')
-                    if hour < int(start) or hour >= int(finish):
-                        instanceList.append(reservation.instances[0].id)
-                        instanceName.append(reservation.instances[0].tags['Name'])
-
-                # Check if running during off day
-                if daysofweek[weekday] not in runtime[0]:
-                    instanceList.append(reservation.instances[0].id)
-                    instanceName.append(reservation.instances[0].tags['Name'])
-        except:
-            pass
 
     if len(instanceList) > 0:
         ec2conn.stop_instances(instanceList)
