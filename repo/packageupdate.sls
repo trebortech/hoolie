@@ -1,9 +1,9 @@
 
-{% set packages = pillar.get('packages', '') %}
+{% set packages = pillar.get('packages', {}) %}
 
 "Update to versioned package set":
   pkg.installed:
-    pkgs:
+    - pkgs:
 {% for package in packages %}
       {% if package.version is defined %}
       - {{ package.name }}: {{ package.version }}
