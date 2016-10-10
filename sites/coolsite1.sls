@@ -38,5 +38,5 @@ include:
   service.running:
     - name: nginx
     - watch:
-      - git: "Push ACME site code"
+      - file: "Push ACME site code"
 
