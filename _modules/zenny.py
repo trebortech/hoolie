@@ -29,6 +29,8 @@ __virtualname__ = 'zenny'
 def __virtual__():
     if HAS_LIBS:
         return __virtualname__
+    else:
+        return False
 
 
 def _session():

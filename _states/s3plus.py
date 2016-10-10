@@ -27,23 +27,41 @@ def exists(name, bucket, files, path):
            'result': True,
            'comment': ''}
 
+    nochange = []
+    changes = []
+
     __salt__['file.mkdir'](dir_path=path)
 
     if type(files) is list:
         for file in files:
+            filepath = '{0}/{1}'.format(path, file)
+            if __salt__['file.file_exists'](filepath):
+                nochange.append(file)
+            else:
+                __salt__['s3plus.get_file'](
+                    objectid=file,
+                    bucketname=bucket,
+                    path='{0}/{1}'.format(path, file))
+                changes.append(file)
+
+    elif type(files) is str:
+        #check if file exists
+        filepath = '{0}/{1}'.format(path, files)
+        if __salt__['file.file_exists'](filepath):
+            nochange.append(files)
+        else:
             __salt__['s3plus.get_file'](
                 objectid=file,
                 bucketname=bucket,
                 path='{0}/{1}'.format(path, file))
-
-    elif type(files) is str:
-        __salt__['s3plus.get_file'](
-            objectid=file,
-            bucketname=bucket,
-            path='{0}/{1}'.format(path, file))
+            changes.append(files)
 
     else:
         ret['result'] = False
         ret['comment'] = 'Files must be string or list'
 
+    if len(changes) > 0:
+        ret['changes'] = {'No Change': '\n'.join(nochange), 'Downloaded': '\n'.join(changes)}
+    else:
+        ret['comment'] = 'No files were updated'
     return ret
