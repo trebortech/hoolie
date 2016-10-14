@@ -5,4 +5,5 @@
   salt.runner:
     - name: cloud.profile
     - prof: demo-ubuntu
-    - instance: {{ instance }}
+    - instances: 
+      - {{ instance }}
