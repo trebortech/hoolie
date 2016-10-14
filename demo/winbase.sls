@@ -13,7 +13,7 @@
   win_update.installed:
     - categories:
       - 'Critical Updates'
-      - 'Seucrity Updates'
+      - 'Security Updates'
 
 
 "Run basic setup script":
