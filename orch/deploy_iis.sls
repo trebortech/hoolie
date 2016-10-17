@@ -78,7 +78,7 @@ wait_for_reboots:
 
 "Send web server highstate message to slack":
   salt.state:
-    - tgt: 'saltmaster'
+    - tgt: 'master1'
     - sls:
       - slack.blast
     - pillar:
