@@ -16,6 +16,10 @@
     - prof: arm-windows
     - instances:
       - {{ name }}
+    - vm_overrides:
+      - minion:
+        - grains:
+          - roles: iis
 
 "Put short pause in for web system to catch up":
   salt.function:
