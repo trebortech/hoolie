@@ -36,12 +36,6 @@
       - sync
       - demo.network
 
-wait_for_reboots:
-  salt.wait_for_event:
-    - name: salt/minion/*/start
-    - id_list:
-      - {{ name }}
-
 "Send IIS message to slack":
   salt.state:
     - tgt: 'master1'
