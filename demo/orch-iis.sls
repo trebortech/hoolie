@@ -15,7 +15,6 @@
     - prof: demo-iis
     - instances:
       - demo-iis1
-      - demo-iis2
     - vm_overrides:
 {% if size == 'small' %}
         num_cpus: 1
@@ -37,7 +36,7 @@
 
 "Deploy initial setup states":
   salt.state:
-    - tgt: 'demo-iis1,demo-iis2'
+    - tgt: 'demo-iis1'
     - tgt_type: list
     - sls:
       - sync
@@ -48,7 +47,6 @@ wait_for_reboots:
     - name: salt/minion/*/start
     - id_list:
       - demo-iis1
-      - demo-iis2
 
 "Send IIS message to slack":
   salt.state:
@@ -60,7 +58,7 @@ wait_for_reboots:
 
 "Add Servers to AD":
   salt.state:
-    - tgt: 'demo-iis1,demo-iis2'
+    - tgt: 'demo-iis1'
     - tgt_type: list
     - sls:
       - demo.addtodomain
@@ -70,7 +68,6 @@ wait_for_reboots:
     - name: salt/minion/*/start
     - id_list:
       - demo-iis1
-      - demo-iis2
 
 "Put short pause in for web system to catch up after AD boot":
   salt.function:
@@ -81,7 +78,7 @@ wait_for_reboots:
 
 "Execute Highstate on web boxes":
   salt.state:
-    - tgt: 'demo-iis1,demo-iis2'
+    - tgt: 'demo-iis1'
     - tgt_type: list
     - highstate: True
 
