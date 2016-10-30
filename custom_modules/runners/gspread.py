@@ -1,5 +1,5 @@
 '''
-An engine to pull lines from Google Sheets into salt stack events
+A runner to pull lines from Google Sheets into salt stack events
 
 :configuration:
 
