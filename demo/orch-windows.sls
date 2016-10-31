@@ -1,20 +1,23 @@
-# IIS Orchestration
+# Windows Orchestration
 
-# Deploys IIS Servers
+# Deploys Windows Servers
 # Setups DNS, Firewall and hostname
 # Add computers to domain
 
-# Deploy 2 new IIS instances
+{% set profile = pillar.get('profile', 'demo-iis') %}
+{% set instance = pillar.get('instance', 'demo1') %}
+{% set domain = pillar.get('domain', 'saltstack.lab') %}
+{% set size = pillar.get('size', 'small') %}
 
 
-"Deploy IIS New Server":
+"Deploy New Windows Server":
   salt.runner:
     - name: fnni.deploy
-    - profile: demo-iis
+    - profile: {{ profile }}
     - instances:
-      - demo-iis1
-    - domain: 'saltstack.lab'
-    - size: 'small'
+      - {{ instance }}
+    - domain: {{ domain }}
+    - size: {{ size }}
 
 "Put short pause in for web system to catch up":
   salt.function:
@@ -25,7 +28,7 @@
 
 "Deploy initial setup states":
   salt.state:
-    - tgt: 'demo-iis1'
+    - tgt: {{ instance }}
     - tgt_type: list
     - sls:
       - sync
@@ -35,19 +38,20 @@ wait_for_reboots:
   salt.wait_for_event:
     - name: salt/minion/*/start
     - id_list:
-      - demo-iis1
+      - {{ instance }}
 
-"Send IIS message to slack":
+
+"Send Windows message to slack":
   salt.state:
     - tgt: 'saltmaster'
     - sls:
       - slack.blast
     - pillar:
-        mymessage: "New IIS Servers have been deployed"
+        mymessage: "New Windows Servers have been deployed"
 
 "Add Servers to AD":
   salt.state:
-    - tgt: 'demo-iis1'
+    - tgt: {{ instance }}
     - tgt_type: list
     - sls:
       - demo.addtodomain
@@ -56,28 +60,28 @@ wait_for_reboots:
   salt.wait_for_event:
     - name: salt/minion/*/start
     - id_list:
-      - demo-iis1
+      - {{ instance }}
 
-"Put short pause in for web system to catch up after AD boot":
+"Put short pause in for system to catch up after AD boot":
   salt.function:
     - tgt: 'saltmaster'
     - name: test.sleep
     - kwarg:
         length: 30
 
-"Execute Highstate on web boxes":
+"Execute Highstate on windows boxes":
   salt.state:
-    - tgt: 'demo-iis1'
+    - tgt: {{ instance }}
     - tgt_type: list
     - highstate: True
 
-"Send web server highstate message to slack":
+"Send windows server highstate message to slack":
   salt.state:
     - tgt: 'saltmaster'
     - sls:
       - slack.blast
     - pillar:
-        mymessage: "Highstate for new web servers has been executed"
+        mymessage: "Highstate for new servers has been executed"
 
 
 
