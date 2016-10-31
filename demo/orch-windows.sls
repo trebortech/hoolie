@@ -8,6 +8,8 @@
 {% set instance = pillar.get('instance', 'demo1') %}
 {% set domain = pillar.get('domain', 'saltstack.lab') %}
 {% set size = pillar.get('size', 'small') %}
+{% set datacenter = pillar.get('datacenter', 'Round Rock') %}
+{% set resourcepool = pillar.get('resourcepool', 'DemoPool') %}
 
 
 "Deploy New Windows Server":
@@ -17,6 +19,8 @@
     - instances:
       - {{ instance }}
     - domain: {{ domain }}
+    - datacenter: {{ datacenter }}
+    - resourcepool: {{ resourcepool }}
     - size: {{ size }}
 
 "Put short pause in for web system to catch up":
