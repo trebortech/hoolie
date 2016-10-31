@@ -101,7 +101,7 @@ def start(documentids,
                 outdata = dict(zip(titlerow, nextline))
                 evtdata['data'] = outdata
                 # Send event
-                fire('{0}/{1}'.format(tag, docid), evtdata)
+                fire('{0}/{1}'.format(tag, odoc.title), evtdata)
                 nextlineid = nextlineid + 1
             else:
                 # Update dbsheet
