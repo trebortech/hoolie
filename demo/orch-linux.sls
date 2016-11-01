@@ -21,6 +21,12 @@
     - resourcepool: {{ resourcepool }}
     - size: {{ size }}
 
+"Put short pause in for web system to catch up":
+  salt.function:
+    - tgt: 'saltmaster'
+    - name: test.sleep
+    - kwarg:
+        length: 5
 
 "Send Linux message to slack":
   salt.state:
@@ -35,6 +41,13 @@
     - tgt: {{ instance }}
     - tgt_type: list
     - highstate: True
+
+"Put short pause in for web system to catch up":
+  salt.function:
+    - tgt: 'saltmaster'
+    - name: test.sleep
+    - kwarg:
+        length: 5
 
 "Send Linux server highstate message to slack":
   salt.state:
