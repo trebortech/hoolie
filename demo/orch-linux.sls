@@ -21,7 +21,7 @@
     - resourcepool: {{ resourcepool }}
     - size: {{ size }}
 
-"Put short pause in for web system to catch up":
+"Put short pause in for linux system to catch up":
   salt.function:
     - tgt: 'saltmaster'
     - name: test.sleep
@@ -42,7 +42,7 @@
     - tgt_type: list
     - highstate: True
 
-"Put short pause in for web system to catch up":
+"Put short pause in for box system to catch up":
   salt.function:
     - tgt: 'saltmaster'
     - name: test.sleep
