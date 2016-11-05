@@ -18,14 +18,8 @@ engines:
     json
 
 
-
-
-
 '''
 from __future__ import absolute_import
-
-import salt.utils.sdb as sdb
-
 import logging
 
 log = logging.getLogger(__name__)
