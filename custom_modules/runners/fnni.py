@@ -3,12 +3,16 @@ FNNI custom runner to manage cloud deployments
 '''
 from __future__ import absolute_import
 
+import os
+import sys
+
 import salt.utils.sdb as sdb
 import infoblox as ib
 import salt.cloud
-import os
 
 import logging
+
+sys.path.insert(0, os.path.abspath('.'))
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +28,7 @@ def _get_client():
     return client
 
 
-def deploy(profile, instances, domain=None, network=None, size='small', opts=None, **kwargs):
+def deploy(profile, instances, domain=None, size='small', opts=None, **kwargs):
 
     if opts is None:
         opts = __opts__
@@ -48,8 +52,12 @@ def deploy(profile, instances, domain=None, network=None, size='small', opts=Non
 
         client = _get_client()
         info = client.profile(profile=profile, names=[instance], vm_overrides=vm_overrides, **kwargs)
-        ipassigned = info[instance]['private_ips'][0]
 
+        for ip in info[instance]['private_ips']:
+            if len(ip) < 16:
+                ipassigned = ip
+
+        # Setup the DNS inside of the Infoblox system
         dnsset = ib.set_host(instance, domain, ipassigned, opts)
 
         if dnsset:
