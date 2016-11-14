@@ -61,9 +61,9 @@ def start(account_sid,
         else:
             __salt__['event.send'](tag, msg)
 
-    if not all(account_sid, auth_token, twilio_number):
-        log.debug('Twilio account configuration not found')
-        return
+    #if not all(account_sid, auth_token, twilio_number):
+    #    log.debug('Twilio account configuration not found')
+    #    return
 
     client = TwilioRestClient(account_sid, auth_token)
 

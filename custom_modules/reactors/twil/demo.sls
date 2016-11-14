@@ -23,7 +23,7 @@
 {% else %}
 'Slack notify':
   local.state.sls:
-    - tgt: 'saltmaster'
+    - tgt: 'master1'
     - expr_form: compound
     - arg:
       - slack.blast
