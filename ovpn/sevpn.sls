@@ -74,7 +74,7 @@
 
 "Build tar file for {{ user }}":
   cmd.run:
-    - name: "tar -cz {{ workingpath }}/{{ caname }}/{{ user }}.tgz {{ workingpath }}/{{ caname }}/{{ user }}"
+    - name: "tar -czf {{ workingpath }}/{{ caname }}/{{ user }}.tgz {{ workingpath }}/{{ caname }}/{{ user }}"
     - unless: "test -e {{ workingpath }}/{{ caname }}/{{ user }}.tgz"
 
 
