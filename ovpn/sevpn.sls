@@ -10,7 +10,7 @@
 
 "Install OpenVPN":
   pkg.installed:
-    - name: OpenVPN
+    - name: openvpn
 
 "DHKey deployed":
   cmd.run:
