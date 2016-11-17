@@ -72,7 +72,6 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
         for user in CN:
             crtpath = _user_config_dir(user, name, workingpath)
             csr = __salt__['tls.create_csr'](name,
-                                             days=days,
                                              CN=user,
                                              C=C,
                                              ST=ST,
@@ -90,7 +89,6 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
     else:
         crtpath = _user_config_dir(user, name, workingpath)
         csr = __salt__['tls.create_csr'](name,
-                                         days=days,
                                          CN=user,
                                          C=C,
                                          ST=ST,
