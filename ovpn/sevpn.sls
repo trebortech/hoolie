@@ -37,6 +37,11 @@
       {% for user in users %}
       - {{ user }}
       {% endfor %}
+    - C: 'US'
+    - ST: 'Texas'
+    - L: 'Round Rock'
+    - O: 'SaaS'
+    - emailAddress: 'noreply@acme.com'
 
 "Push OpenVPN configuration":
   file.managed:

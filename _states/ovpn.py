@@ -58,7 +58,8 @@ def ca(name, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
 
     return ret
 
-def user(name, CN, workingpath):
+def user(name, CN, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
+         emailAddress='noreply@acme.com', workingpath):
 
     ret = {'name': name,
            'changes': {},
@@ -70,7 +71,15 @@ def user(name, CN, workingpath):
     if type(CN) is list:
         for user in CN:
             crtpath = _user_config_dir(user, name, workingpath)
-            csr = __salt__['tls.create_csr'](name, csr_path=crtpath, CN=user)
+            csr = __salt__['tls.create_csr'](name,
+                                             days=days,
+                                             CN=user,
+                                             C=C,
+                                             ST=ST,
+                                             L=L,
+                                             O=O,
+                                             emailAddress=emailAddress,
+                                             csr_path=crtpath)
             crt = __salt__['tls.create_ca_signed_cert'](name, cert_path=crtpath, CN=user)
             
             if 'already exists' in crt:
@@ -80,7 +89,16 @@ def user(name, CN, workingpath):
 
     else:
         crtpath = _user_config_dir(user, name, workingpath)
-        csr = __salt__['tls.create_csr'](name, csr_path=crtpath, CN=CN)
+        csr = __salt__['tls.create_csr'](name,
+                                         name,
+                                         days=days,
+                                         CN=user,
+                                         C=C,
+                                         ST=ST,
+                                         L=L,
+                                         O=O,
+                                         emailAddress=emailAddress,
+                                         csr_path=crtpath)
         crt = __salt__['tls.create_ca_signed_cert'](name, cert_path=crtpath, CN=CN)
         if 'already exists' in crt:
             changes.append('user {0} certificate already exists'.format(user))           
