@@ -5,7 +5,7 @@
 {% set vpnnet = '10.77.0.0' %}
 {% set localnet = '10.11.0.0' %}
 {% set vpnendpoint = 'seovpn.salt.trebortech.ninja' %}
-{% set users = ['rbooth-salt-mac'] %}
+{% set users = ['rbooth-sedemo-mac'] %}
 
 
 "Install OpenVPN":
