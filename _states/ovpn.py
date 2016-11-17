@@ -58,8 +58,8 @@ def ca(name, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
 
     return ret
 
-def user(name, CN, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
-         emailAddress='noreply@acme.com', workingpath):
+def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
+         emailAddress='noreply@acme.com'):
 
     ret = {'name': name,
            'changes': {},
@@ -90,7 +90,6 @@ def user(name, CN, days=365, C='US', ST='Texas', L='Round Rock', O='SaaS',
     else:
         crtpath = _user_config_dir(user, name, workingpath)
         csr = __salt__['tls.create_csr'](name,
-                                         name,
                                          days=days,
                                          CN=user,
                                          C=C,
