@@ -80,7 +80,10 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
                                              cert_type=client,
                                              emailAddress=emailAddress,
                                              csr_path=crtpath)
-            crt = __salt__['tls.create_ca_signed_cert'](name, cert_path=crtpath, CN=user)
+            crt = __salt__['tls.create_ca_signed_cert'](name,
+                                    cert_type=client,
+                                    cert_path=crtpath,
+                                    CN=user)
             
             if 'already exists' in crt:
                 changes.append('user {0} certificate already exists'.format(user))           
@@ -98,7 +101,10 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
                                          cert_type=client,
                                          emailAddress=emailAddress,
                                          csr_path=crtpath)
-        crt = __salt__['tls.create_ca_signed_cert'](name, cert_path=crtpath, CN=CN)
+        crt = __salt__['tls.create_ca_signed_cert'](name,
+                                      cert_type=client,
+                                      cert_path=crtpath,
+                                      CN=CN)
         if 'already exists' in crt:
             changes.append('user {0} certificate already exists'.format(user))           
         else:
