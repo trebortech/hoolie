@@ -77,11 +77,11 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
                                              ST=ST,
                                              L=L,
                                              O=O,
-                                             cert_type='none',
+                                             cert_type='common',
                                              emailAddress=emailAddress,
                                              csr_path=crtpath)
             crt = __salt__['tls.create_ca_signed_cert'](name,
-                                    cert_type='none',
+                                    cert_type='common',
                                     cert_path=crtpath,
                                     CN=user)
             
@@ -98,11 +98,11 @@ def user(name, CN, workingpath, days=365, C='US', ST='Texas', L='Round Rock', O=
                                          ST=ST,
                                          L=L,
                                          O=O,
-                                         cert_type='none',
+                                         cert_type='common',
                                          emailAddress=emailAddress,
                                          csr_path=crtpath)
         crt = __salt__['tls.create_ca_signed_cert'](name,
-                                      cert_type='none',
+                                      cert_type='common',
                                       cert_path=crtpath,
                                       CN=CN)
         if 'already exists' in crt:
