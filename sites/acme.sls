@@ -27,7 +27,7 @@ include:
 "Push ACME site code":
   file.recurse:
     - name: {{ workingdir }}
-    - source: salt://websites/acme
+    - source: salt://websites/acme/
     - saltenv: {{ env }}
     - makedirs: True
     - user: root
