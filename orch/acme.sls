@@ -1,7 +1,6 @@
 {% set sitename = pillar['sitename'] %}
 {% set nodename = pillar['nodename'] %}
 {% set refid = pillar['refid'] %}
-{% set committime = pillar['committime'] %}
 
 "Deploy New Server":
   salt.function:
@@ -9,13 +8,12 @@
     - name: cloud.profile
     - kwarg:
         profile: {{ sitename }}
-        names:
-          - {{ nodename }}
+        names: {{ nodename }}
         vm_overrides:
           tag:
-            'Environment': 'Testing'
+            'Environment': 'sse-demo'
           minion:
-            master: 10.5.0.239
+            master: 10.5.1.231
 
 "Execute HighState on new test box":
   salt.state:
@@ -23,28 +21,20 @@
     - highstate: True
 
 "Send cloud deploy message to slack":
-  salt.state:
-    - tgt: 'saltmaster'
-    - sls:
-      - slack.blast
-    - pillar:
-        mymessage: "{{ nodename }} cloud deploy done"
+  salt.runner:
+    - name: slack.post_message
+    - channel: general
+    - message: "{{ nodename }} cloud deploy done"
+    - from_name: 'Orchestration'
+
 
 "Send wait message to slack":
-  salt.state:
-    - tgt: 'saltmaster'
-    - sls:
-      - slack.blast
-    - pillar:
-        mymessage: "Application has been deployed. Starting application check from remote host"
+  salt.runner:
+    - name: slack.post_message
+    - channel: general
+    - message: "Application has been deployed. Starting application check from remote host"
+    - from_name: 'Orchestration'
 
-"Run check of application deployed":
-  salt.state:
-    - tgt: 'saltmaster'
-    - sls:
-      - checks.acme
-    - pillar:
-        minionid: "{{ nodename }}"
 
 "Send message to slack with status of application":
   salt.state:
