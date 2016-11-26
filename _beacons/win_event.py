@@ -59,7 +59,10 @@ def beacon(config):
 
     VALID_TYPES = [
         'error',
-        'information']
+        'information',
+        'failureaudit',
+        'successaudit',
+        'warning']
 
     interval = config['win_event_interval']
 
@@ -88,11 +91,11 @@ def beacon(config):
                 evtid.append(r'($_.eventID -eq {0})'.format(checkid))
 
         if len(evtid) == 1:
-            eventids = evtid
+            eventids = ''.join(evtid)
         elif len(evtid) > 1:
             eventids = ' -or '.join(evtid)
         else:
-            eventids = []
+            eventids = ''
 
         pscmd = []
         pscmd.append(r'{0}'.format(entryTypes))
@@ -104,7 +107,7 @@ def beacon(config):
         pscmd.append(r'-erroraction silentlycontinue ')
         pscmd.append(r'}')
         if len(eventids) > 0:
-            pscmd.append(r'|where {{0}}'.format(eventids))
+            pscmd.append(r'|where {' + eventids + '}')
         pscmd.append(r'|fl')
 
         command = ''.join(pscmd)
