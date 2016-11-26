@@ -6,7 +6,7 @@ import logging
 import salt.utils
 import salt.utils.compat
 
-log = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 __virtualname__ = 'win_event'
 
@@ -41,11 +41,14 @@ def beacon(config):
             Application:
               EntryType:
                 - Error
+
             Security:
               EntryType:
                 - information
               EventID:
                 - 902
+          win_event_interval: 10
+          tag: watchmyevents
           interval: 10
 
     '''
@@ -58,21 +61,31 @@ def beacon(config):
         'error',
         'information']
 
-    interval = config['interval']
+    interval = config['win_event_interval']
+
+    try:
+        tag = config['tag']
+    except:
+        tag = 'winevent'
+
     ret = []
 
     for log in config:
+        if log.lower() not in VALID_LOGS:
+            return ret
         evt_config = config[log]
         # Application|Security|System
 
         # Entry types
-        # Infomration, Error, ...
-        entryTypes = ','.join(evt_config['EntryType'])
+        # Infomration, Error,
+        entryTypes = ','.join('"' + item + '"' for item in evt_config['EntryType'])
 
         # Event IDs
         evtid = []
-        for checkid in evt_config['EventID']:
-            evtid.append(r'($_.eventID -eq {0})'.format(checkid))
+
+        if 'EventID' in evt_config:
+            for checkid in evt_config['EventID']:
+                evtid.append(r'($_.eventID -eq {0})'.format(checkid))
 
         if len(evtid) == 1:
             eventids = evtid
@@ -85,10 +98,10 @@ def beacon(config):
         pscmd.append(r'{0}'.format(entryTypes))
         pscmd.append(r'|foreach {')
         pscmd.append(r'get-eventlog ')
-        pscmd.append(r'-logname {0}'.format(log))
-        pscmd.append(r'-after ((get-date).addseconds(-{0}))'.format(interval))
-        pscmd.append(r'-entrytype $_')
-        pscmd.append(r'-erroraction silentlycontinue')
+        pscmd.append(r'-logname {0} '.format(log))
+        pscmd.append(r'-after ((get-date).addseconds(-{0})) '.format(interval))
+        pscmd.append(r'-entrytype $_ ')
+        pscmd.append(r'-erroraction silentlycontinue ')
         pscmd.append(r'}')
         if len(eventids) > 0:
             pscmd.append(r'|where {{0}}'.format(eventids))
@@ -96,11 +109,21 @@ def beacon(config):
 
         command = ''.join(pscmd)
 
-        log.debug('******** POWERSHELL ***********')
-        log.debug(command)
-
+        LOG.debug('******** POWERSHELL ***********')
+        LOG.debug(command)
         retdata = _srvmgr(command)
-
-        ret.append(retdata)
+        evData = {}
+        if retdata:
+            retdata = retdata.split('\r\n')
+            lineitems = filter(None, retdata)
+            for item in lineitems:
+                try:
+                    k, v = item.split(':', 1)
+                    evData[k.strip()] = v.strip()
+                except:
+                    continue
+            sub = {'tag': tag,
+                   'event': evData}
+            ret.append(sub)
 
     return ret
