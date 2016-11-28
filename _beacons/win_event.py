@@ -45,7 +45,9 @@ def beacon(config):
               tag: 'failed login'
             App failure:
               eventlog: Application
-              entrytype: Error, Information
+              entrytype:
+                - Error
+                - Information
               eventid:
                 - 12
                 - 234
