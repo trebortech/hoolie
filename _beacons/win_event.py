@@ -38,20 +38,28 @@ def beacon(config):
     Example Config
         beacons:
           win_event:
-            Application:
-              EntryType:
-                - Error
-
-            Security:
-              EntryType:
-                - information
-              EventID:
-                - 902
+            Failed Logins:
+              eventlog: Security
+              entrytype: failureaudit
+              eventid: 4625
+              tag: 'failed login'
+            App failure:
+              eventlog: Application
+              entrytype: Error, Information
+              eventid:
+                - 12
+                - 234
+                - 567
+              tag: 'App 1 failed'
           win_event_interval: 10
           tag: watchmyevents
           interval: 10
 
     '''
+    IGNORE_TYPES = [
+        'win_event_interval',
+        'interval']
+
     VALID_LOGS = [
         'application',
         'security',
@@ -73,22 +81,33 @@ def beacon(config):
 
     ret = []
 
-    for log in config:
-        if log.lower() not in VALID_LOGS:
-            return ret
-        evt_config = config[log]
-        # Application|Security|System
+    for check in config:
+        if check in IGNORE_TYPES:
+            continue
 
-        # Entry types
-        # Infomration, Error,
-        entryTypes = ','.join('"' + item + '"' for item in evt_config['EntryType'])
+        evt_config = config[check]
 
-        # Event IDs
+        eventlog = evt_config.get('eventlog', '')
+        entrytypes = evt_config.get('entrytype', '')
+        eventid = evt_config.get('eventid', '')
+        tag = evt_config.get('tag', tag)
+
         evtid = []
+        enttype = []
 
-        if 'EventID' in evt_config:
-            for checkid in evt_config['EventID']:
-                evtid.append(r'($_.eventID -eq {0})'.format(checkid))
+        if isinstance(entrytypes, list):
+            for entrytype in entrytypes:
+                enttype.append(r'"' + entrytype + '"')
+        else:
+            enttype.append(r'"' + entrytypes + '"')
+
+        enttypes = ','.join(enttype)
+
+        if isinstance(eventid, list):
+            for eid in eventid:
+                evtid.append(r'($_.eventID -eq {0})'.format(eid))
+        elif isinstance(eventid, str):
+            evtid.append(r'($_.eventID -eq {0})'.format(eventid))
 
         if len(evtid) == 1:
             eventids = ''.join(evtid)
@@ -98,10 +117,10 @@ def beacon(config):
             eventids = ''
 
         pscmd = []
-        pscmd.append(r'{0}'.format(entryTypes))
+        pscmd.append(r'{0}'.format(enttypes))
         pscmd.append(r'|foreach {')
         pscmd.append(r'get-eventlog ')
-        pscmd.append(r'-logname {0} '.format(log))
+        pscmd.append(r'-logname {0} '.format(eventlog))
         pscmd.append(r'-after ((get-date).addseconds(-{0})) '.format(interval))
         pscmd.append(r'-entrytype $_ ')
         pscmd.append(r'-erroraction silentlycontinue ')
