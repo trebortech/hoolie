@@ -5,11 +5,10 @@
 # maintainer    Robert Booth <rbooth@saltstack.com>
 # maturity      new
 # depends       
-#               files/7zip/7z920-x64.msi
 #               srv/salt/win/repo/7zip/
 #
 # platform      Windows
-# description   Installs the 7Zip ap
+# description   Removes the 7Zip ap
 # 
 ###############################
 
