@@ -17,3 +17,4 @@
 "Install 7Zip":
   pkg.removed:
     - name: 7zip
+    - version: {{ zipversion }}
