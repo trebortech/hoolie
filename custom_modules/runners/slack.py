@@ -47,9 +47,12 @@ def __virtual__():
     return __virtualname__
 
 
-def _get_api_key():
-    api_key = __salt__['config.get']('slack.api_key') or \
-        __salt__['config.get']('slack:api_key')
+def _get_api_key(opts=None):
+    if opts is None:
+        opts = __opts__
+    config = opts['slack']
+
+    api_key = config['api_key']
 
     if not api_key:
         raise SaltInvocationError('No Slack API key found.')
@@ -57,9 +60,13 @@ def _get_api_key():
     return api_key
 
 
-def _get_hook_id():
-    url = __salt__['config.get']('slack.hook') or \
-        __salt__['config.get']('slack:hook')
+def _get_hook_id(opts=None):
+    if opts is None:
+        opts = __opts__
+    config = opts['slack']
+
+    url = config['hook']
+
     if not url:
         raise SaltInvocationError('No Slack WebHook url found')
 
