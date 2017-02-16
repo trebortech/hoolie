@@ -1,7 +1,6 @@
 
 
 
-
 "Install SSSD":
   pkg.installed:
     - name: sssd
