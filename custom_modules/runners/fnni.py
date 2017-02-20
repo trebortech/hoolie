@@ -28,7 +28,7 @@ def _get_client():
     return client
 
 
-def deploy(profile, instances, domain=None, size='small', opts=None, **kwargs):
+def deploy(profile, type='iis', numinstances=1, domain=None, size='small', opts=None, **kwargs):
 
     if opts is None:
         opts = __opts__
