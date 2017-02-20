@@ -21,4 +21,5 @@
   salt.state:
     - tgt: {{ instance }}
     - sls:
+      - sync
       - demo.lab.createminion
