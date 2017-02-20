@@ -15,7 +15,7 @@ except ImportError:
 def __virtual__():
     if HAS_REQUESTS:
         return __virtualname__
-    else
+    else:
         return False
 
 
