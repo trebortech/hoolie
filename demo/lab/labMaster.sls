@@ -16,3 +16,9 @@
       tag:
         'Environment': 'Lab'
         'Customer': 'ACME'
+
+"Send event to create minion":
+  salt.state:
+    - tgt: {{ instance }}
+    - sls:
+      - demo.lab.createminion
