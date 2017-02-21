@@ -2,6 +2,7 @@
 {% set lab = pillar.get('lab', '') %}   # lab1
 {% set masterip = pillar.get('masterip', '') %}  #65.65.65.65
 {% set zonename = pillar.get('zonename', 'salt.trebortech.ninja') %}
+{% set localip = pillar.get('localip', '') %}
 
 # instance ---> labminion#
 "Deploy New Lab Minion":
@@ -35,3 +36,11 @@
     - zonename: "{{ zonename }}."
     - recordtype:  "A"
     - ttl: 300
+
+"Rehome minion":
+  salt.state:
+    - tgt: {{ lab }}minion
+    - sls:
+      - workers.rehome
+    - pillar:
+        master: {{ localip }}
