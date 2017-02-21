@@ -21,4 +21,10 @@
   salt.state:
     - tgt: {{ instance }}
     - sls:
+      - sync
+
+"Send event to create minion":
+  salt.state:
+    - tgt: {{ instance }}
+    - sls:
       - demo.lab.createminion
