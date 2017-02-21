@@ -3,7 +3,7 @@
 {% set labs = ['lab30', 'lab31', 'lab32', 'lab33'] %}
 
 {% for lab in labs %}
-"Deploy New Lab Server":
+"Deploy New {{ lab }} Server":
   salt.runner:
     - name: cloud.profile
     - prof: {{ profile }}
@@ -20,13 +20,13 @@
         'Environment': 'Lab'
         'Customer': 'ACME'
 
-"Sync modules":
+"Sync modules for {{ lab }}":
   salt.state:
     - tgt: {{ lab }}master
     - sls:
       - sync
 
-"Send event to create minion":
+"Send event to create minion for {{ lab }}":
   salt.state:
     - tgt: {{ lab }}master
     - sls:
