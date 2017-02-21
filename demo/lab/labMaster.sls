@@ -29,3 +29,4 @@
     - tgt: {{ lab }}master
     - sls:
       - demo.lab.createminion
+      - demo.lab.user
