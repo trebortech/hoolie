@@ -16,9 +16,9 @@
         grains:
           roles:
             - labminion
-       tag:
-         'Environment': 'Lab'
-         'Customer': 'ACME'
+      tag:
+        'Environment': 'Lab'
+        'Customer': 'ACME'
 
 "Setup DNS record in Route53":
   salt.runner:
