@@ -25,6 +25,7 @@
     - tgt: {{ lab }}minion
     - sls:
       - demo.lab.user
+      - demo.lab.ssh
 
 "Setup DNS record in Route53":
   salt.runner:

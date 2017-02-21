@@ -30,3 +30,4 @@
     - sls:
       - demo.lab.createminion
       - demo.lab.user
+      - demo.lab.ssh
