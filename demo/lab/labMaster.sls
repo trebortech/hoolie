@@ -1,6 +1,8 @@
 {% set profile = pillar.get('profile', '') %}
-{% set lab = pillar.get('lab', '') %}
 
+{% set labs = ['lab30', 'lab31', 'lab32', 'lab33'] %}
+
+{% for lab in labs %}
 "Deploy New Lab Server":
   salt.runner:
     - name: cloud.profile
@@ -31,3 +33,4 @@
       - demo.lab.createminion
       - demo.lab.user
       - demo.lab.ssh
+{% endfor %}
