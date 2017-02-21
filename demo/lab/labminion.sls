@@ -23,8 +23,8 @@
 "Setup DNS record in Route53":
   salt.runner:
     - name: aws_route53.create_dns_record
-    - url: {{ lab }}master.{{ zonename }}
+    - url: "{{ lab }}master.{{ zonename }}"
     - ip: {{ masterip }}
-    - zonename: {{ zonename }}.
-    - recordtype:  A
+    - zonename: "{{ zonename }}."
+    - recordtype:  "A"
     - ttl: 300
