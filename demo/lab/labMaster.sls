@@ -1,16 +1,17 @@
 {% set profile = pillar.get('profile', '') %}
-{% set instance = pillar.get('lab', '') %}
+{% set lab = pillar.get('lab', '') %}
 
 "Deploy New Lab Server":
   salt.runner:
     - name: cloud.profile
     - prof: {{ profile }}
     - instances:
-      - {{ instance }}
+      - {{ lab }}master
     - vm_overrides:
       minion:
         master: 127.0.0.1
         grains:
+          lab: {{ lab }}
           roles:
             - labmaster
       tag:
@@ -19,12 +20,12 @@
 
 "Sync modules":
   salt.state:
-    - tgt: {{ instance }}
+    - tgt: {{ lab }}master
     - sls:
       - sync
 
 "Send event to create minion":
   salt.state:
-    - tgt: {{ instance }}
+    - tgt: {{ lab }}master
     - sls:
       - demo.lab.createminion
