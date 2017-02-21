@@ -20,6 +20,12 @@
         'Environment': 'Lab'
         'Customer': 'ACME'
 
+"Create default user":
+  salt.state:
+    - tgt: {{ lab }}minion
+    - sls:
+      - demo.lab.user
+
 "Setup DNS record in Route53":
   salt.runner:
     - name: aws_route53.create_dns_record
