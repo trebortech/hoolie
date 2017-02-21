@@ -17,7 +17,7 @@
         'Environment': 'Lab'
         'Customer': 'ACME'
 
-"Send event to create minion":
+"Sync modules":
   salt.state:
     - tgt: {{ instance }}
     - sls:
