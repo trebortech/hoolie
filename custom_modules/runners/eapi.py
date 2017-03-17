@@ -101,8 +101,18 @@ def delete_targetgroup(tgtgroup):
 
 
 def create_targetgroups(source):
-    # Build target groups from yaml file
+    '''
+    Build target groups from yaml file
 
+    "New Group 1":
+      name: "My New TargetGroup"
+      match: "G@roles:iis"
+
+    (optional)
+      tgttype: "compound"
+
+    '''
+    
     sourcefile = open(source)
     datamap = yaml.safe_load(sourcefile)
     retdata = []
