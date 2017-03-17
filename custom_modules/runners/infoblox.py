@@ -14,9 +14,9 @@ import logging
 
 log = logging.getLogger(__name__)
 
-try:
-    import json
-    import requests
+    try:
+        import json
+        import requests
     HAS_IMPORTS = True
 except ImportError:
     HAS_IMPORTS = False

@@ -33,7 +33,7 @@ include:
     - name: "Docker-{{ repo }}-Repository"
     - humanname: "docker-{{ repo }}-repo"
     - file: "/etc/yum.repos.d/docker-{{ repo }}.repo"
-    - baseurl: "https://yum.dockerproject.org/repo/{{ repo }}/{{ lsb_dist }}/{{ dist_version}}"
+    - baseurl: "https://yum.dockerproject.org/repo/{{ repo }}/centos/7"
     - enabled: True
     - gpgkey: https://yum.dockerproject.org/gpg
     - require:

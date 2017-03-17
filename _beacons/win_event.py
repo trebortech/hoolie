@@ -38,12 +38,12 @@ def beacon(config):
     Example Config
         beacons:
           win_event:
-            Failed Logins:
-              eventlog: Security
-              entrytype: failureaudit
-              eventid: 4625
-              tag: 'failed login'
-            App failure:
+            Failed Logins:   <--- Descriptive Name
+              eventlog: Security   <--- Event lob to watch
+              entrytype: failureaudit  <--- Event Type
+              eventid: 4625    <--- Event ID
+              tag: 'failed login'  <--- Custom event tag
+            App failure:  
               eventlog: Application
               entrytype:
                 - Error
@@ -53,11 +53,12 @@ def beacon(config):
                 - 234
                 - 567
               tag: 'App 1 failed'
-          win_event_interval: 10
-          tag: watchmyevents
-          interval: 10
+          win_event_interval: 10  <--- Length of time to look back at events
+          tag: watchmyevents <--- Default tag for event. Used if not specified above
+          interval: 10  <--- Beacon run interval
 
     '''
+    # Settings in config to ignore
     IGNORE_TYPES = [
         'win_event_interval',
         'interval']
@@ -87,6 +88,7 @@ def beacon(config):
         if check in IGNORE_TYPES:
             continue
 
+        # check is the descritive name of the check
         evt_config = config[check]
 
         eventlog = evt_config.get('eventlog', '')
