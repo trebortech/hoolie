@@ -18,7 +18,6 @@ import random
 
 
 log = logging.getLogger(__name__)
-xsrftoken = ''
 
 
 def __virtual__():
@@ -26,8 +25,6 @@ def __virtual__():
 
 
 def _srvmgr(method='GET', handler=None, opts=None, data=None):
-
-    global xsrftoken
 
     if opts is None:
         opts = __opts__
@@ -40,16 +37,15 @@ def _srvmgr(method='GET', handler=None, opts=None, data=None):
 
     conn = requests.Session()
 
-    if not xsrftoken:
-        # Get token
-        tokenurl = baseurl + '/stats'
-        requesttoken = conn.get(tokenurl,
-                                auth=(eapi_username, eapi_password),
-                                verify=sslVerify)
-        if requesttoken.status_code == 200:
-            xsrftoken = requesttoken.headers['x-xsrftoken']
-        else:
-            return 'Error'
+    # Get token
+    tokenurl = baseurl + '/stats'
+    requesttoken = conn.get(tokenurl,
+                            auth=(eapi_username, eapi_password),
+                            verify=sslVerify)
+    if requesttoken.status_code == 200:
+        xsrftoken = requesttoken.headers['x-xsrftoken']
+    else:
+        return 'Error'
 
     headers = {}
     headers['content-type'] = 'application/json'
@@ -101,4 +97,8 @@ def copy_group(sourcegroup, newgroup):
 
     ret = _srvmgr(method="POST", handler="auth/role", data=data)
 
+    if ret.status_code == 201:
+        return "New group {0} created".format(newgroup)
+    else:
+        return "Error creating group"
     return True
