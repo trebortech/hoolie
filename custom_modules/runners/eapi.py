@@ -70,6 +70,34 @@ def _srvmgr(method='GET', handler=None, opts=None, data=None):
     return requestset
 
 
+def create_targetgroup(newname, match, tgttype='compound'):
+
+    # Check to see if target group already exist by name
+
+    source_ret = _srvmgr(method="GET", handler="tgt")
+    data_ret = json.loads(source_ret.text)['ret']
+    for rec in data_ret:
+        if rec['name'] == newname:
+            return "New Target Group already exist"
+
+    # Create target group
+
+    data = {}
+    data['name'] = newname
+    data['tgt'] = match
+    data['pillars'] = []
+    data['masters'] = []
+    data['tgt_type'] = tgttype
+
+    ret = _srvmgr(method="POST", handler="tgt", data=data)
+
+    if ret.status_code == 201:
+        return "New group {0} created".format(newname)
+    else:
+        return "Error creating group"
+    return True
+
+
 def copy_group(sourcegroup, newgroup):
 
     '''
