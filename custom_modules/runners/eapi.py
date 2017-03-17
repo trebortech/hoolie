@@ -13,6 +13,7 @@ import sys
 import salt.client
 import salt.utils.master
 import json
+import yaml
 import requests
 import random
 
@@ -97,6 +98,29 @@ def delete_targetgroup(tgtgroup):
         return "Target Group {0} has been removed".format(tgtgroup)
     else:
         return "Could not remove tgt group"
+
+
+def create_targetgroups(source):
+    # Build target groups from yaml file
+
+    sourcefile = open(source)
+    datamap = yaml.safe_load(sourcefile)
+    retdata = []
+
+    for i in datamap:
+        newname = datamap[i]['name']
+        match = datamap[i]['match']
+        if 'tgttype' in datamap[i]:
+            tgttype = datamap[i]['tgttype']
+        else:
+            tgttype = 'compound'
+        ret = create_targetgroup(newname, match, tgttype)
+        if ret != "Error creating group":
+            retdata.append(ret)
+        else:
+            retdata.append("Error creating {0}".format(newname))
+
+    return retdata
 
 
 def create_targetgroup(newname, match, tgttype='compound'):
