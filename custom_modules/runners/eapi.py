@@ -24,7 +24,7 @@ def __virtual__():
     return 'eapi'
 
 
-def _srvmgr(method='GET', handler=None, opts=None, data=None):
+def _srvmgr(method='GET', handler=None, opts=None, data=None, nid=None):
 
     if opts is None:
         opts = __opts__
@@ -58,6 +58,13 @@ def _srvmgr(method='GET', handler=None, opts=None, data=None):
                                verify=sslVerify,
                                data=json.dumps(data),
                                headers=headers)
+    elif method == 'DELETE':
+        eapiurl = '{0}/{1}/{2}'.format(baseurl, handler, nid)
+        requestset = conn.delete(eapiurl,
+                                 auth=(eapi_username, eapi_password),
+                                 verify=sslVerify,
+                                 headers=headers)
+
     elif method == 'GET':
         eapiurl = '{0}/{1}'.format(baseurl, handler)
         requestset = conn.get(eapiurl,
@@ -68,6 +75,28 @@ def _srvmgr(method='GET', handler=None, opts=None, data=None):
     conn.close()
 
     return requestset
+
+
+def delete_targetgroup(tgtgroup):
+
+    groupid = ''
+    # Check to see if target group exist
+    source_ret = _srvmgr(method="GET", handler="tgt")
+    data_ret = json.loads(source_ret.text)['ret']
+    for rec in data_ret:
+        if rec['name'] == tgtgroup:
+            groupid = rec['id']
+            continue
+
+    if not groupid:
+        return "Target group does not exist"
+
+    ret = _srvmgr(method="DELETE", handler="tgt", nid=groupid)
+
+    if ret.status_code == 204:
+        return "Target Group {0} has been removed".format(tgtgroup)
+    else:
+        return "Could not remove tgt group"
 
 
 def create_targetgroup(newname, match, tgttype='compound'):
