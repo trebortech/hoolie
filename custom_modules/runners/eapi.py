@@ -9,14 +9,9 @@ Depends on having SaltStack Enterprise API installed
 from __future__ import absolute_import
 
 import logging
-import sys
-import salt.client
-import salt.utils.master
 import json
 import yaml
 import requests
-import random
-
 
 log = logging.getLogger(__name__)
 
@@ -112,7 +107,7 @@ def create_targetgroups(source):
       tgttype: "compound"
 
     '''
-    
+
     sourcefile = open(source)
     datamap = yaml.safe_load(sourcefile)
     retdata = []
