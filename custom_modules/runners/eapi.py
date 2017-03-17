@@ -156,35 +156,35 @@ def create_targetgroup(newname, match, tgttype='compound'):
     return True
 
 
-def copy_group(sourcegroup, newgroup):
+def copy_role(sourcerole, newrole):
 
     '''
-    This will copy the permissions of one group to another
+    This will copy the permissions of one role to create another
     '''
 
     # Make sure source exist
     source_ret = _srvmgr(method="GET", handler="auth/role")
     data_ret = json.loads(source_ret.text)['ret']
-    if sourcegroup not in data_ret:
-        return 'Source group does not exist'
+    if sourcerole not in data_ret:
+        return 'Source role does not exist'
 
     # Make sure new does not exist
-    if newgroup in data_ret:
-        return 'New group already exist'
+    if newrole in data_ret:
+        return 'New role already exist'
 
-    # Get source group permissions
-    sourcegroupperms = data_ret[sourcegroup]['perms']
-    # Create new group with source permissions
+    # Get source role permissions
+    sourceroleperms = data_ret[sourcerole]['perms']
+    # Create new role with source permissions
 
     data = {}
-    data['name'] = newgroup
-    data['perms'] = [x.encode('UTF8') for x in sourcegroupperms]
+    data['name'] = newrole
+    data['perms'] = [x.encode('UTF8') for x in sourceroleperms]
     data['desc'] = ''
 
     ret = _srvmgr(method="POST", handler="auth/role", data=data)
 
     if ret.status_code == 201:
-        return "New group {0} created".format(newgroup)
+        return "New role {0} created".format(newrole)
     else:
-        return "Error creating group"
+        return "Error creating role"
     return True
