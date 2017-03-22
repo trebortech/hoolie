@@ -6,5 +6,5 @@
   mc-cloud.cliqrbuild:
     - name: 'Build new cliqrImage'
     - cliqrtagversion: {{ ver }}
-    - cliqrtarget: 'demo@10.5.1.238'
+    - cliqrtarget: 'root@10.5.1.238'
     - cliqrsourceimage: 'cliqr/worker'

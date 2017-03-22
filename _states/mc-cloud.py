@@ -32,9 +32,9 @@ def cliqrbuild(name, cliqrtagversion, cliqrtarget, cliqrsourceimage='cliqr/worke
 
     # Export to tar file
 
-    __salt__['dockerng.export'](name=cliqrnew,
-                                path=cliqrpath,
-                                makedirs=True)
+    __salt__['dockerng.save'](name=cliqrnew,
+                              path=cliqrpath,
+                              makedirs=True)
 
     # Copy tar to remote host
     __salt__['rsync.rsync'](src=cliqrpath,
