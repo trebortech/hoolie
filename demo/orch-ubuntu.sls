@@ -1,5 +1,4 @@
 # Linux Orchestration
-
 # Deploy Linux Server in AWS
 
 {% set profile = pillar.get('profile', '') %}
