@@ -12,7 +12,19 @@ __virtualname__ = 'mayohostname'
 
 '''
 CC | T | XXX | 123 | F | NN | O
+
+Grains available
+- citycode
+- hosttype
+- hostfunc
+- funcid
+- functype
+- clusternode
+
+salt-call grains.item citycode
+
 '''
+
 
 def get_funcid(funcid):
     try:
