@@ -9,5 +9,5 @@
 'Add zenoss key to {{ username }} user':
   ssh_auth.present:
     - user: {{ username }} 
-    - source: salt://ssh_keys/zenoss.id_rsa.pub
+    - source: salt://ssh_keys/zenoss5.id_rsa.pub
     - config: '%h/.ssh/authorized_keys'
