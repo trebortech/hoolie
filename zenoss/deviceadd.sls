@@ -7,7 +7,7 @@
   event.send:
     - name: zenoss/add/device
     - data:
-        deviceclass: {{ grains['deviceclass'][0] }} 
+        deviceclass: {{ grains['deviceclass'] }} 
         title: {{ grains['id'] }}
         devicename: {{ grains['fqdn_ip4'][0] }}
         serialnumber: {{ grains['serialnumber'] }}
