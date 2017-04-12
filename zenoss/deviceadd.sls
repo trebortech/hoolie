@@ -12,4 +12,5 @@
         devicename: {{ grains['fqdn_ip4'][0] }}
         serialnumber: {{ grains['serialnumber'] }}
         zCommandUsername: {{ grains['zCommandUsername'] }}
+        serviceorganizer: {{ grains['serviceorganizer'] }}
 
