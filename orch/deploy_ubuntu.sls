@@ -1,5 +1,6 @@
 
 {% set instance = pillar.get('name', 'noname') %}
+{% set deviceclass = pillar.get('deviceclass', '/Server/Linux') %}
 {% set roles = pillar.get('role', 'norole') %}
 
 "Deploy Instance":
@@ -24,3 +25,10 @@
     - tgt: '{{ instance }}'
     - tgt_type: list
     - highstate: True
+
+"Add to Zenoss":
+  salt.runner:
+    - name: zenoss.add_device
+    - deviceName: {{ instance }}
+    - deviceClass: {{ deviceclass }}
+    - comments: "Are you worth your salt"
