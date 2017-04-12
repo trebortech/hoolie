@@ -1,5 +1,6 @@
 
 {% set instance = pillar.get('name', 'noname') %}
+{% set roles = pillar.get('role', 'norole') %}
 
 "Deploy Instance":
   salt.runner:
