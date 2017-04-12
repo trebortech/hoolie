@@ -12,6 +12,7 @@
     - vm_overrides:
       minion:
         grains:
+          deviceclass: {{ deviceclass }}
           roles: {{ role }}
 
 "Execute Highstate on new box":
@@ -19,10 +20,3 @@
     - tgt: '{{ instance }}'
     - tgt_type: list
     - highstate: True
-
-"Add to Zenoss":
-  salt.runner:
-    - name: zenoss.add_device
-    - deviceName: {{ instance }}
-    - deviceClass: {{ deviceclass }}
-    - comments: "Are you worth your salt"
