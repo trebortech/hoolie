@@ -14,12 +14,6 @@
         grains:
           roles: {{ role }}
 
-"Wait for minion service to start":
-  salt.wait_for_event:
-    - name: salt/minion/*/start
-    - id_list:
-      - {{ instance }}
-
 "Execute Highstate on new box":
   salt.state:
     - tgt: '{{ instance }}'
