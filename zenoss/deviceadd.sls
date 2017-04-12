@@ -13,4 +13,5 @@
         serialnumber: {{ grains['serialnumber'] }}
         zCommandUsername: {{ grains['zCommandUsername'] }}
         serviceorganizer: {{ grains['serviceorganizer'] }}
+        servicename: {{ grains['servicename'] }}
 
