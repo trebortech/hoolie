@@ -1,11 +1,15 @@
-
-
+{% set sitename = grains.get('roles', 'noname') %}
 
 # Deploy web content for site 1
 "Site 1":
   file.recurse:
     - name: /var/www/site1
     - source: salt://sites/site1
+    - template: jinja
+    - include_empty: True
+    - defaults:
+        SITE_NAME: {{ sitename }}
+        MINION_NAME: {{ grains['id'] }}
 
 # Deploy Site 1 Configuration file
 "Site 1 apache config file":
