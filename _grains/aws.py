@@ -7,8 +7,6 @@ import base64
 import hmac
 import hashlib
 import urllib
-from cStringIO import StringIO
-
 import xml.etree.ElementTree as etree
 
 EC2_URL = {'us-east-1': 'ec2.us-east-1.amazonaws.com',
@@ -43,6 +41,13 @@ def __virtual__():
         return False
 
 
+def xml_to_dict(doc):
+    d = {doc.tag : map(xml_to_dict, doc.iterchildren())}
+    d.update(('@' + k, v) for k, v in doc.attrib.iteritems())
+    d['text'] = doc.text
+    return d
+
+
 def iso8601(seconds_ago=0):
     utcnow = datetime.datetime.utcnow()
     if seconds_ago == 0:
@@ -50,7 +55,7 @@ def iso8601(seconds_ago=0):
     else:
         utc = utcnow = datetime.timedelta(seconds=seconds_ago)
 
-    return utc.strftime('%Y-%m-%dT%H:%M:%S')
+    return utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
 
 
 def signURL(httpVerb='GET',
@@ -81,13 +86,8 @@ def conn():
     apikey = config.get('accesskey')
     apisecret = config.get('secretkey')
     '''
-    apikey = "AKIAIOS2EDN4SP3MD64Q"
-    apisecret = "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"
-
-    #timestamp = datetime.datetime.utcnow().isoformat()
-
-    #auth = hmac.new(apisecret, msg=text, digestmod=hashlib.HmacSHA256)
-    # http://169.254.169.254/latest/meta-data/placement/availability-zone = us-east-1b
+    apikey = "AKIANBL2HQ"
+    apisecret = "tIupA4u"
 
     instanceid = str(requests.get("http://169.254.169.254/latest/meta-data/instance-id",
                                   proxies={'http': ''}).text)
@@ -120,10 +120,12 @@ def conn():
     requestset = requests.get(getURL,
                               verify=False)
 
-    import pdb;pdb.set_trace()
-    results = etree.parse(StringIO(requestset))
+    if requestset.status_code == 200:
+        print "GOOD"
+        return 'Good'
 
-    return
+    print "BAD"
+    return 'BAD'
 
 
 def get_publicip():
