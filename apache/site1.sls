@@ -22,7 +22,7 @@
 
 # Restart httpd service if configuration file updated
 
-"Restart HTTPD service":
+"Restart HTTPD service after Site1 deployed":
   cmd.wait:
     - name: 'sudo service httpd restart'
     - use_vt: True
