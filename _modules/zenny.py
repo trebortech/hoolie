@@ -76,7 +76,7 @@ def statusupdate(color='clear'):
 
 
 def say(msg='Testing the system'):
-    
+
     '''
     filepath = '/tmp/hello.mp3'
     tts = gTTS(text=msg, lang='en')
@@ -95,7 +95,6 @@ def say(msg='Testing the system'):
     engine.say(msg)
     engine.runAndWait()
     return
-
 
 
 def cleanup():
