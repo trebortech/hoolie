@@ -5,6 +5,6 @@
 
 "Update PIP":
   cmd.run:
-    - name: 'easy_install -U pip'
+    - name: 'pip install --upgrade pip'
     - require:
       - pkg: 'Python Pip'
