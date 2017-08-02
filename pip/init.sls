@@ -1,7 +1,13 @@
+{% if grains['os_family'] == 'RedHat' %}
+{% set pippkg = 'python2-pip' %}
+{% elif grains['os_family'] == 'Debian' %}
+{% set pippkg = 'python-pip' %}
+{% endif %}
+
 
 "Python Pip":
   pkg.installed:
-    - name: python-pip
+    - name: {{ pippkg }}
 
 "Update PIP":
   cmd.run:
