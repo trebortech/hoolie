@@ -4,6 +4,7 @@ Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/
 
 root    ALL=(ALL:ALL) ALL
 ubuntu  ALL=(ALL) NOPASSWD:ALL
+salt    ALL=(ALL) NOPASSWD:ALL
 
 #%admin ALL=(ALL) ALL
 #%sudo   ALL=(ALL:ALL) ALL
