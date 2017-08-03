@@ -30,6 +30,7 @@ include:
     - mode: 500
     - user: root
     - group: root
+    - makedirs: True
     - template: jinja
     - defaults:
         SSHKEY: {{ sshkey }}
