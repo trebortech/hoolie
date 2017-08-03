@@ -59,19 +59,19 @@ def statusupdate(color='clear'):
     _session()
 
     if color == 'blue':
-        setcolor('110')
+        setcolor('010')
         return
 
     if color == 'red':
-        setcolor('101')
+        setcolor('001')
         return
 
     if color == 'green':
-        setcolor('011')
+        setcolor('100')
         return
 
     if color == 'clear':
-        setcolor('111')
+        setcolor('000')
         return
 
 
