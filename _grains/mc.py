@@ -26,7 +26,7 @@ salt-call grains.item citycode
 '''
 
 
-def get_funcid(funcid):
+def _get_funcid(funcid):
     try:
         funcid = int(funcid)
         if funcid >= 000 and funcid <= 399:
@@ -77,7 +77,7 @@ def parse_hostname():
     ret['hostfunc'] = {
         'VCE': 'VCEM servers'}.get(hostname[3:6], 'UNKNOWN')
 
-    ret['funcid'] = get_funcid(hostname[6:9])
+    ret['funcid'] = _get_funcid(hostname[6:9])
 
     ret['functype'] = {
         'A': 'Application Servers',
