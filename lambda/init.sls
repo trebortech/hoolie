@@ -17,7 +17,7 @@ include:
     - group: root
 
 "Set grain value":
-  grains.preset:
+  grains.present:
     - name: 'lambda'
     - value: 'True'
 
