@@ -16,3 +16,8 @@ include:
     - user: root
     - group: root
 
+"Set grain value":
+  grains.preset:
+    - name: 'lambda'
+    - value: 'True'
+
