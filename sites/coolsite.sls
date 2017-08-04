@@ -23,6 +23,11 @@ include:
     - name: version
     - value: {{ env }}
 
+"Set version grain":
+  grains.present:
+    - name: role
+    - value: 'coolsite'
+
 "Push ssh config file":
   file.managed:
     - name: /root/.ssh/config
