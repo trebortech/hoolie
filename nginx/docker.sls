@@ -2,6 +2,7 @@
 
 include:
   - docker
+  - sites.site1
 
 "Download corp image":
   dockerng.image_present:
