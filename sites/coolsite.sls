@@ -23,7 +23,7 @@ include:
     - name: version
     - value: {{ env }}
 
-"Set version grain":
+"Set role grain":
   grains.present:
     - name: role
     - value: 'coolsite'
