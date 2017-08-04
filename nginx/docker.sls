@@ -5,13 +5,13 @@ include:
   - sites.site1
 
 "Download corp image":
-  dockerng.image_present:
+  docker.image_present:
     - name: 'saltme/nginx:0.6'
     - require:
       - pip: "Docker Python API"
 
 "Spin up a container":
-  dockerng.running:
+  docker.running:
     - name: Container1
     - image: saltme/nginx:0.6
     - hostname: web1
